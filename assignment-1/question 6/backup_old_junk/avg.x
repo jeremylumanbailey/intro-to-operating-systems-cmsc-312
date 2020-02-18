@@ -10,7 +10,7 @@ const MAXAVGSIZE  = 200;
 
 struct input_data
   {
-  double input_data<200>; /* char input_data... */
+  double input_data<200>;
   };
 
 
@@ -18,7 +18,7 @@ typedef struct input_data input_data;
 
 program AVERAGEPROG {
     version AVERAGEVERS {
-        input_data AVERAGE(input_data) = 1;
+        double AVERAGE(input_data) = 1;
     } = 1;
 } = 28855;
 /* original: 22855  change to v00880079 28855*/

@@ -11,25 +11,27 @@ static double sum_avg;
  * a parameter 
  */
 
-void swap(double *p,double *q) {
+void swap(int *p,int *q) {
    int t;
       
          t=*p; 
 	    *p=*q; 
 	       *q=t;
 	       }
-void sort(double a[],int n) { 
-     int i,j,temp;
-     for(i = 0;i < n-1;i++) {
-           for(j = 0;j < n-i-1;j++) {
-	            if(a[j] > a[j+1])
-                    swap(&a[j],&a[j+1]);
-				      }
-		         }
-		 }
+
+	       void sort(int a[],int n) { 
+	          int i,j,temp;
+
+		     for(i = 0;i < n-1;i++) {
+		           for(j = 0;j < n-i-1;j++) {
+			            if(a[j] > a[j+1])
+				                swap(&a[j],&a[j+1]);
+						      }
+						         }
+							 }
 
 
-input_data * average_1(input_data *input, CLIENT *client) 
+double * average_1(input_data *input, CLIENT *client) 
   {
 
   /* input is paramters were marshalled by genrated routine */
@@ -43,25 +45,32 @@ input_data * average_1(input_data *input, CLIENT *client)
 
   for(k = 0; k <= input->input_data.input_data_len; k++ )
   {
-   	a[k] = *dp;
-   	dp++;
+   a[k] = *dp;
+   dp++;
   }
   
   sort(a, n);
+
+  n = (n+1) / 2 - 1;
+  sum_avg = a[n];
   
-  dp = input->input_data.input_data_val;
+  if (n % 2 != 0)
+  	sum_avg = (a[n] + a[n+1]) / 2;
+  if (input->input_data.input_data_len == 2)
+  	sum_avg = (a[0] + a[1]) / 2;
+
+  /*  u_int i; */
+   /* iterate until end of number of times (data_len) */
+//  for( i = 1; i <= input->input_data.input_data_len; i++ )
+//    {
+//    sum_avg = sum_avg + *dp;  /* add what ptrs points  to ( '*' gets content ) */
+//    dp++;
+//    }
+
+//  sum_avg = sum_avg / input->input_data.input_data_len;
   
- u_int j;
 
- for(j = 0; j < n; j++)
-
- {
-   *dp = a[j];
-   dp++;
-
- }
-
-  return( input );
+  return( &sum_avg );
 }
 
 /* 
@@ -72,7 +81,7 @@ input_data * average_1(input_data *input, CLIENT *client)
  *   where local is (char *(*)(char *, struct svc_req *)) average_1_svc;
  */
  
-input_data * average_1_svc(input_data *input, struct svc_req *svc) 
+double * average_1_svc(input_data *input, struct svc_req *svc) 
   {
   CLIENT *client;
   return( average_1( input, client) );

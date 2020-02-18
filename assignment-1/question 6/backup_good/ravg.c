@@ -12,13 +12,7 @@ void averageprog_1( char* host, int argc, char *argv[] )
    int i;
    double 	f, *dp;
    char 	*endptr;
-   
-   char tmp[12];
-   strcpy(tmp, argv[argc - 1]);
-   char ascend[] = "-a";
-   char decend[] = "-d";
- //  if( strcmp(tmp, ascend) == 0 )
- //  	printf("Hello, World!");
+  
    
    input_data  average_1_arg, *result_1; /* input_data rpc struct */
 
@@ -27,15 +21,12 @@ void averageprog_1( char* host, int argc, char *argv[] )
    /* pointer to double, beginning of input data */
    dp = average_1_arg.input_data.input_data_val;
 
+
    /* set number of items */
+   average_1_arg.input_data.input_data_len = argc - 2;
 
-   
-
-   average_1_arg.input_data.input_data_len = argc - 3;
-
-   for( i = 1; i <= (argc - 3); i++ )
+   for( i = 1; i <= (argc - 2); i++ )
    {
-       
 	/* str to d ASCII string to floating point nubmer */
  	f = strtod( argv[i+1], &endptr);
 
@@ -93,33 +84,17 @@ void averageprog_1( char* host, int argc, char *argv[] )
 
    dp = result_1->input_data.input_data_val;
 
-   if( strcmp(tmp, ascend) == 0 )
-   {	
-     for( i = 0; i < (argc - 3); i++ )
+   for( i = 0; i < (argc - 2); i++ )
    {
    	printf("%g ", *dp);
 	dp++;
 	}
 	printf("\n");
- 
 
-   }
+   char *h;
+   h = argv[1];
+   printf("%s, ", h);
 
-   for( i = 1; i < (argc - 3); i++) 
-   {
-   	dp++;
-   }
-
-   
-   if( strcmp(tmp, decend) == 0) {
-	for( i = 0; i < (argc - 3); i++ )
-   {
-   	printf("%g ", *dp);
-	dp--;
-	}
-	printf("\n");
-}
-	printf("\n");
 }
 
 /* here is main */
